@@ -7,25 +7,16 @@ export const runtime = "edge"; // 'nodejs' is the default
 export async function GET(request: NextRequest) {
   const url = new URL(request.url);
   const params = new URLSearchParams(url.search);
-  const city = params.get("city");
-  if (city) {
-    const cityQuery = city + "%";
-    const rows =
-      await sql`SELECT city,latitude,longitude,country from cities where city LIKE ${cityQuery} LIMIT 5`;
-    return NextResponse.json(rows.rows, {
-      status: 200,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type, Authorization",
-      },
-    });
-  } else {
-    return NextResponse.json(
-      { error: "Wrong query params" },
-      {
-        status: 400,
-      }
-    );
-  }
+  const city = params.get("city") ? params.get("city") : "A";
+  const cityQuery = city + "%";
+  const rows =
+    await sql`SELECT city,latitude,longitude,country from cities where city LIKE ${cityQuery} LIMIT 5`;
+  return NextResponse.json(rows.rows, {
+    status: 200,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
+    },
+  });
 }
