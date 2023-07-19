@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
   if (city) {
     const cityQuery = city + "%";
     const rows =
-      await sql`SELECT city,latitude,longitude from cities where city LIKE ${cityQuery} LIMIT 5`;
+      await sql`SELECT city,latitude,longitude,country from cities where city LIKE ${cityQuery} LIMIT 5`;
     console.log(rows);
     return NextResponse.json(rows.rows, {
       status: 200,
