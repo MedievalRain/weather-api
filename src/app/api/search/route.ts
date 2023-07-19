@@ -8,12 +8,10 @@ export async function GET(request: NextRequest) {
   const url = new URL(request.url);
   const params = new URLSearchParams(url.search);
   const city = params.get("city");
-  console.log(params);
   if (city) {
     const cityQuery = city + "%";
     const rows =
       await sql`SELECT city,latitude,longitude,country from cities where city LIKE ${cityQuery} LIMIT 5`;
-    console.log(rows);
     return NextResponse.json(rows.rows, {
       status: 200,
       headers: {
