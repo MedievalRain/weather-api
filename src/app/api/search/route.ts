@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
   const city = params.get("city") ? params.get("city") : "A";
   const cityQuery = city + "%";
   const rows =
-    await sql`SELECT city,latitude,longitude,country from cities where city LIKE ${cityQuery} LIMIT 5`;
+    await sql`SELECT city,latitude,longitude,country,timezone from cities where city LIKE ${cityQuery} LIMIT 5`;
   return NextResponse.json(rows.rows, {
     status: 200,
     headers: {
